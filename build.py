@@ -33,7 +33,7 @@ for nome in ('Bruna · ', 'Mariana · ', 'Pati · '):
     out = out[:a] + out[b:]
 assert 'Jéssica' in out and 'Mariana' not in out
 
-og = '<link rel="canonical" href="https://guiapega.com.br/">\n<meta property="og:title" content="Guia da Pega | por Dayane Dos Anjos">\n<meta property="og:image" content="https://guiapega.com.br/assets/hero.webp">\n<meta property="og:url" content="https://guiapega.com.br/">\n'
+og = '<meta name="facebook-domain-verification" content="fwouj6eyndilhopnl0eb0e4cw2yixt" />\n<link rel="canonical" href="https://guiapega.com.br/">\n<meta property="og:title" content="Guia da Pega | por Dayane Dos Anjos">\n<meta property="og:image" content="https://guiapega.com.br/assets/hero.webp">\n<meta property="og:url" content="https://guiapega.com.br/">\n'
 out = out.replace('<title>', og + '<title>', 1)
 (R/'index.html').write_text(out, encoding='utf-8')
 print('ok', len(out))
