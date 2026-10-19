@@ -27,11 +27,24 @@ assert 'guiadapega.com.br' not in out and '[rascunho]' not in out
 fonts = re.search(r'<link href="(https://fonts.googleapis.com/css2[^"]+)" rel="stylesheet">', out)
 out = out.replace(fonts.group(0), f'<link rel="preload" as="style" href="{fonts.group(1)}" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="{fonts.group(1)}"></noscript>')
 
-# depoimentos reescritos saem ate chegarem os reais (fica so a Jessica, que e fala real)
-for nome in ('Bruna · ', 'Mariana · ', 'Pati · '):
-    i = out.index(nome); a = out.rindex('<div class="wpp', 0, i); b = out.index('</div>', out.index('class="meta"', i)) + 6
-    out = out[:a] + out[b:]
-assert 'Jéssica' in out and 'Mariana' not in out
+# depoimentos: falas reais do site antigo (guia-v3) com tapa leve pra tirar termo de saude (aprovado Bruno 19/10)
+DEPO = {
+    'Bruna · ': 'Me diziam que sofrer no começo era normal e que eu tinha que aguentar. Aprendi a oferecer o peito de um jeito que o Theo pega com facilidade, e hoje amamento tranquila, sem medo da próxima mamada.',
+    'Mariana · ': 'A Aurora mamava o tempo todo e nunca parecia satisfeita. Quando aprendi a facilitar a pega, ela passou a tirar muito mais leite em cada mamada e hoje sai do peito tranquila e cheia.',
+    'Pati · ': 'Eu já chegava em cada mamada sem aguentar mais. Poucos dias depois de mudar a forma de oferecer o peito, tudo mudou. Agora o Davi mama e eu curto o momento.',
+}
+for nome, txt in DEPO.items():
+    i = out.index(nome); a = out.index('<p>', i) + 3; b = out.index('</p>', a)
+    out = out[:a] + txt + out[b:]
+
+# headline + botao (opcao 1 "nao desistir", aprovada Bruno 19/10)
+h1a = out.index('<h1>'); h1b = out.index('</h1>', h1a)
+out = out[:h1a] + '<h1>Pensando em desistir de amamentar? Existe um jeito de facilitar a pega do seu bebê, e a mamada fica leve <em>já na próxima vez</em>.' + out[h1b:]
+assert out.count('Quero amamentar tranquila') == 3
+out = out.replace('Quero amamentar tranquila', 'Quero continuar amamentando')
+visivel = re.sub(r'<[^>]+>', ' ', re.sub(r'(?s)<(script|style)[^>]*>.*?</\1>', ' ', out)).lower()
+for w in (' dor ', 'fissura', 'machuc', 'carne viva', 'cicatriz', 'peso', 'engord', 'consultora', 'enfermeira'):
+    assert w not in visivel, (w, visivel[max(0,visivel.find(w)-120):visivel.find(w)+60])
 
 og = '<meta name="facebook-domain-verification" content="fwouj6eyndilhopnl0eb0e4cw2yixt" />\n<link rel="canonical" href="https://guiapega.com.br/">\n<meta property="og:title" content="Guia da Pega | por Dayane Dos Anjos">\n<meta property="og:image" content="https://guiapega.com.br/assets/hero.webp">\n<meta property="og:url" content="https://guiapega.com.br/">\n'
 out = out.replace('<title>', og + '<title>', 1)
