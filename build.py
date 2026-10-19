@@ -42,6 +42,9 @@ h1a = out.index('<h1>'); h1b = out.index('</h1>', h1a)
 out = out[:h1a] + '<h1>Pensando em desistir de amamentar? Existe um jeito de facilitar a pega do seu bebê, e a mamada fica leve <em>já na próxima vez</em>.' + out[h1b:]
 assert out.count('Quero amamentar tranquila') == 3
 out = out.replace('Quero amamentar tranquila', 'Quero continuar amamentando')
+# 19/10: rotulo proprio da pagina nova no medidor (beacon guia|v6) e no utm_content (|v6; o casamento remove |vN)
+assert out.count("var VER='v2'") == 1 and out.count("uc?uc+'|v2':'v2'") == 1
+out = out.replace("var VER='v2'", "var VER='v6'").replace("uc?uc+'|v2':'v2'", "uc?uc+'|v6':'v6'")
 visivel = re.sub(r'<[^>]+>', ' ', re.sub(r'(?s)<(script|style)[^>]*>.*?</\1>', ' ', out)).lower()
 for w in (' dor ', 'fissura', 'machuc', 'carne viva', 'cicatriz', 'peso', 'engord', 'consultora', 'enfermeira'):
     assert w not in visivel, (w, visivel[max(0,visivel.find(w)-120):visivel.find(w)+60])

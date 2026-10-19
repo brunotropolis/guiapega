@@ -563,7 +563,7 @@ footer{background:#121A30;color:#9AA4C0}
   })();
 </script>
 <script>
-(function(){var p=new URLSearchParams(location.search);var keep=/^(utm_|fbclid|gclid|ttclid)/i;var pass=new URLSearchParams();p.forEach(function(v,k){if(keep.test(k))pass.append(k,v);});function gc(n){var m=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)');return m?m.pop():'';}var fbp=gc('_fbp');if(fbp)pass.append('fbp',fbp);var fbc=gc('_fbc');if(fbc)pass.append('fbc',fbc);try{pass.append('ua',navigator.userAgent);}catch(e){}var uc=pass.get('utm_content')||'';pass.set('utm_content',uc?uc+'|v2':'v2');/* A/B: v3 ocupa o slot desafiante v2 */var s=pass.toString();if(!s)return;document.querySelectorAll('a.btn-comprar').forEach(function(a){a.href+=(a.href.indexOf('?')>-1?'&':'?')+s;});})();
+(function(){var p=new URLSearchParams(location.search);var keep=/^(utm_|fbclid|gclid|ttclid)/i;var pass=new URLSearchParams();p.forEach(function(v,k){if(keep.test(k))pass.append(k,v);});function gc(n){var m=document.cookie.match('(^|;)\\s*'+n+'\\s*=\\s*([^;]+)');return m?m.pop():'';}var fbp=gc('_fbp');if(fbp)pass.append('fbp',fbp);var fbc=gc('_fbc');if(fbc)pass.append('fbc',fbc);try{pass.append('ua',navigator.userAgent);}catch(e){}var uc=pass.get('utm_content')||'';pass.set('utm_content',uc?uc+'|v6':'v6');/* A/B: v3 ocupa o slot desafiante v2 */var s=pass.toString();if(!s)return;document.querySelectorAll('a.btn-comprar').forEach(function(a){a.href+=(a.href.indexOf('?')>-1?'&':'?')+s;});})();
 (function(){var T=window.trackMeta||function(ev,cd){if(window.fbq)fbq('track',ev,cd||{});};T('ViewContent',{content_name:'Guia da Pega',content_type:'product',value:67.00,currency:'BRL'});document.querySelectorAll('a.btn-comprar').forEach(function(a){a.addEventListener('click',function(e){if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;if(a.getAttribute('data-ic'))return;a.setAttribute('data-ic','1');e.preventDefault();var dest=a.href;T('InitiateCheckout',{content_name:'Guia da Pega',value:67.00,currency:'BRL'});setTimeout(function(){window.location.href=dest;},250);});});})();
 </script>
 <!-- funil-secao (Sherlock) — universal, auto-detecta pagina/versao. abriu->viu oferta->viu botao->ic -->
@@ -572,7 +572,7 @@ footer{background:#121A30;color:#9AA4C0}
   var U='https://n8n-n8n.xktssy.easypanel.host/webhook/ab-ic', h=location.hostname, p=location.pathname;
   var m=p.match(/(canguru|coala|coruja|leao|suricato)/);
   var PAG='guia';
-  var VER='v2'; /* HARDCODED: /v3 ocupa o slot desafiante v2 no A/B; reporta 'v2' pro snapshot (nao derivar do path) */
+  var VER='v6'; /* HARDCODED: /v3 ocupa o slot desafiante v2 no A/B; reporta 'v2' pro snapshot (nao derivar do path) */
   var BTN='.btn-comprar, a[href*="payfast"], a[href*="checkout"], a[href*="greenn"]';
   function hit(ev){ try{ navigator.sendBeacon(U, new Blob([JSON.stringify({pagina:PAG,versao:VER,evento:ev})],{type:'text/plain'})); }catch(e){} }
   var done={}; function once(ev){ if(done[ev])return; done[ev]=1; hit(ev); }
